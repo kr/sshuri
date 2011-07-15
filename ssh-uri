@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import os, urlparse, sys
+
+if len(sys.argv[1:]) != 1:
+    print >>sys.stderr, 'Usage: ssh-uri <uri>'
+    sys.exit(1)
+
+uristr, = sys.argv[1:]
+u = urlparse.urlparse(uristr)
+
+args = ['ssh']
+if u.port is not None:
+    args.extend(('-p', str(u.port)))
+where = u.hostname
+if u.username is not None:
+    where = u.username + '@' + where
+args.append(where)
+
+os.execvp('ssh', args)
