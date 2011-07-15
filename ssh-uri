@@ -2,14 +2,15 @@
 
 import os, urlparse, sys
 
-if len(sys.argv[1:]) != 1:
-    print >>sys.stderr, 'Usage: ssh-uri <uri>'
+if len(sys.argv[1:]) < 1:
+    print >>sys.stderr, 'Usage: ssh-uri [flags] <uri>'
     sys.exit(1)
 
-uristr, = sys.argv[1:]
+uristr = sys.argv[-1]
+flags = sys.argv[1:-1]
 u = urlparse.urlparse(uristr)
 
-args = ['ssh']
+args = ['ssh'] + flags
 if u.port is not None:
     args.extend(('-p', str(u.port)))
 where = u.hostname
