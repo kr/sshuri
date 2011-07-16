@@ -8,6 +8,11 @@ if len(sys.argv[1:]) < 1:
 
 uristr = sys.argv[-1]
 flags = sys.argv[1:-1]
+
+if not uristr.startswith('ssh://'):
+    print >>sys.stderr, 'Error: %r is not an SSH URI' % (uristr,)
+    print >>sys.stderr, 'Usage: ssh-uri [flags] <uri>'
+    sys.exit(1)
 u = urlparse.urlparse(uristr)
 
 args = ['ssh'] + flags
