@@ -1,11 +1,11 @@
-Ssh-uri is a small wrapper for the ssh command.
+Sshuri is a small wrapper for the ssh command.
 It parses SSH URIs as defined in
 https://datatracker.ietf.org/doc/draft-salowey-secsh-uri/
 and invokes ssh with appropriate flags.
 
 Examples:
-	ssh-uri ssh://user@host.example.com
-	ssh-uri ssh://user@host.example.com:2222
+	sshuri ssh://user@host.example.com
+	sshuri ssh://user@host.example.com:2222
 
 Todo:
-	ssh-uri ssh://user;fingerprint=ssh-dss-c1-b1-30-29-d7-b8-de-6c-97-77-10-d7-46-41-63-87@host.example.com
+	sshuri ssh://user;fingerprint=ssh-dss-c1-b1-30-29-d7-b8-de-6c-97-77-10-d7-46-41-63-87@host.example.com
