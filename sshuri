@@ -2,17 +2,25 @@
 
 import os, urlparse, sys
 
+prefix = 'ssh://'
+
 if len(sys.argv[1:]) < 1:
-    print >>sys.stderr, 'Usage: ssh-uri [flags] <uri>'
+    print >>sys.stderr, 'Usage: ssh-uri [flags] <uri> [command]'
     sys.exit(1)
 
-uristr = sys.argv[-1]
-flags = sys.argv[1:-1]
-
-if not uristr.startswith('ssh://'):
+if len(sys.argv[1:]) >= 2 and sys.argv[-2].startswith(prefix):
+    cmd = sys.argv[-1]
+    uristr = sys.argv[-2]
+    flags = sys.argv[1:-2]
+elif sys.argv[-1].startswith(prefix):
+    cmd = None
+    uristr = sys.argv[-1]
+    flags = sys.argv[1:-1]
+else:
     print >>sys.stderr, 'Error: %r is not an SSH URI' % (uristr,)
     print >>sys.stderr, 'Usage: ssh-uri [flags] <uri>'
     sys.exit(1)
+
 u = urlparse.urlparse(uristr)
 
 args = ['ssh'] + flags
@@ -22,5 +30,7 @@ where = u.hostname
 if u.username is not None:
     where = u.username + '@' + where
 args.append(where)
+if cmd is not None:
+    args.append(cmd)
 
 os.execvp('ssh', args)
